@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"mkdesk/entry"
 	"mkdesk/utils"
@@ -12,12 +13,29 @@ const LocalEntriesDir = ".local/share/applications/"
 
 func main() {
 	de := entry.DesktopEntry{}
+	dryRun := false
+
+	flag.StringVar(&de.Name, "name", "", "Name")
+	flag.StringVar(&de.GenericName, "generic-name", "", "Generic name")
+	flag.StringVar(&de.Comment, "comment", "", "Comment")
+	flag.StringVar(&de.Categories, "categories", "", "Semicolon-separated list of categories")
+	flag.StringVar(&de.Exec, "exec", "", "Executable path")
+	flag.StringVar(&de.Icon, "icon", "", "Icon path")
+	flag.BoolVar(&dryRun, "dry-run", false, "Just print the final desktop entry, without saving it")
+	flag.Parse()
+
 	de.FillDefault()
 
 	err := de.InteractiveFill(true)
 	if err != nil {
 		_, _ = fmt.Fprintf(os.Stderr, "There was an error while filling the desktop entry: %v\n", err)
 		os.Exit(1)
+	}
+
+	if dryRun {
+		fmt.Println()
+		fmt.Println(de.String())
+		os.Exit(0)
 	}
 
 	baseDir, err := os.UserHomeDir()
