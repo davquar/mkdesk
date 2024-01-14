@@ -2,31 +2,20 @@
 
 Simple interactive CLI utility to quickly create **Desktop Entries** according to (a tiny tiny subset of) the Freedesktop specifications.
 
-## Usage (interactive)
+## Usage
 
-```shell
-$ ./mkdesk
-Create your desktop entry
+mkdesk supports both **flags** and **interactive** mode. The two modalities can be used **simultaneously**: the interactive mode will just skip arguments supplied via flags and ask you the remaining ones.
 
-Field:  Name (e.g. Mozilla Firefox)
-Value:  MarkText
+### Supported flags
 
-Field:  GenericName (e.g. Web Browser)
-Value:  Markdown editor
-
-Field:  Comment (e.g. Software to browse the web)
-Value:     
-
-Field:  Categories (e.g. Network;WebBrowser)
-Value:  Office
-
-Field:  Exec (e.g. /path/to/firefox)
-Value:  /opt/marktext.AppImage                
-
-Field:  Icon (e.g. /path/to/firefox/icon.png)
-Value:  /opt/.icons/marktext.png
-
-Desktop entry saved.
+```
+--name           Name
+--generic-name   Generic name
+--comment        Comment
+--exec           Executable path
+--icon           Icon path
+--categories     Semicolon-separated list of categories
+--dry-run        Just print the final desktop entry, without saving it
 ```
 
 The desktop entry will be saved in `~/.local/share/applications`.
